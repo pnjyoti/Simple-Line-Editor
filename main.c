@@ -10,6 +10,8 @@ int lineCount = 0;
 void insertLine();
 void deleteLine();
 void displayDocument();
+void saveFile();
+void loadFile();
 
 int main()
 {
@@ -17,12 +19,15 @@ int main()
     insertLine();
     insertLine();
 
-    printf("\nBefore deletion:\n");
+    printf("\nCurrent document:\n");
     displayDocument();
 
-    deleteLine();
+    saveFile();
 
-    printf("\nAfter deletion:\n");
+    printf("\nLoading document...\n");
+    loadFile();
+
+    printf("\nLoaded document:\n");
     displayDocument();
 
     return 0;
@@ -107,4 +112,48 @@ void displayDocument()
     {
         printf("%d. %s\n", i + 1, document[i]);
     }
+}
+
+void saveFile()
+{
+    FILE *file = fopen("document.txt", "w");
+
+    if (file == NULL)
+    {
+        printf("Error: Unable to save file.\n");
+        return;
+    }
+
+    for (int i = 0; i < lineCount; i++)
+    {
+        fprintf(file, "%s\n", document[i]);
+    }
+
+    fclose(file);
+
+    printf("Document saved successfully.\n");
+}
+
+void loadFile()
+{
+    FILE *file = fopen("document.txt", "r");
+
+    if (file == NULL)
+    {
+        printf("No saved file found.\n");
+        return;
+    }
+
+    lineCount = 0;
+
+    while (lineCount < MAX_LINES &&
+           fgets(document[lineCount], MAX_LENGTH, file) != NULL)
+    {
+        document[lineCount][strcspn(document[lineCount], "\n")] = '\0';
+        lineCount++;
+    }
+
+    fclose(file);
+
+    printf("Document loaded successfully.\n");
 }
