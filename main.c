@@ -13,25 +13,69 @@ void displayDocument();
 void saveFile();
 void loadFile();
 
-int main()
+    int main()
 {
-    insertLine();
-    insertLine();
-    insertLine();
+    int choice;
 
-    printf("\nCurrent document:\n");
-    displayDocument();
+    do
+    {
+        printf("\n===== SIMPLE LINE EDITOR =====\n");
+        printf("1. Insert Line\n");
+        printf("2. Delete Line\n");
+        printf("3. Display Document\n");
+        printf("4. Save File\n");
+        printf("5. Load File\n");
+        printf("6. Help\n");
+        printf("7. Exit\n");
 
-    saveFile();
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    printf("\nLoading document...\n");
-    loadFile();
+        switch (choice)
+        {
+            case 1:
+                insertLine();
+                break;
 
-    printf("\nLoaded document:\n");
-    displayDocument();
+            case 2:
+                deleteLine();
+                break;
+
+            case 3:
+                displayDocument();
+                break;
+
+            case 4:
+                saveFile();
+                break;
+
+            case 5:
+                loadFile();
+                break;
+
+            case 6:
+                printf("\nCommands:\n");
+                printf("1 - Insert a line\n");
+                printf("2 - Delete a line\n");
+                printf("3 - Display document\n");
+                printf("4 - Save document\n");
+                printf("5 - Load document\n");
+                printf("7 - Exit editor\n");
+                break;
+
+            case 7:
+                printf("Exiting editor...\n");
+                break;
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+
+    } while (choice != 7);
 
     return 0;
 }
+
 
 void insertLine()
 {
